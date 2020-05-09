@@ -94,41 +94,35 @@
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
 
     initAccordion(){
       const thisProduct = this;
       
       /* [DONE] find the clickable trigger (the element that should react to clicking) */
-
       thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
 
       /* [DONE] START: click event listener to trigger */
-
       thisProduct.accordionTrigger.addEventListener('click', function(){
     
         /* [DONE] prevent default action for event */
-
         event.preventDefault();
 
         /* [DONE] toggle active class on element of thisProduct */
-
         thisProduct.element.classList.toggle('active');
 
         /* [DONE] find all active products */
-
         const allActiveProducts = document.querySelectorAll('article.active');
 
         /* [DONE] START LOOP: for each active product */
-
         for(let activeProduct of allActiveProducts) {
 
           /* [DONE] START: if the active product isn't the element of thisProduct */
-
           if(activeProduct !== thisProduct.element) {          
 
             /* [DONE] remove class active for the active product */
-
             activeProduct.classList.remove('active');
 
           /* [DONE] END: if the active product isn't the element of thisProduct */
@@ -204,6 +198,32 @@
             console.log('New price: ' + price);
           /* END ELSE IF: if option is not selected and option is default */
           }
+
+          /* save images of each option as const optionImage */
+          const optionImages = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
+          //console.log('"optionImages": ', optionImages);
+
+          /* START IF: if option is selected */
+          if(optionSelected){
+            /* START LOOP: for each optionImage in optionImages */
+            for(let optionImage of optionImages){
+              /* add class active to image */
+              optionImage.classList.add(classNames.menuProduct.imageVisible);
+            /* END LOOP: for each optionImage in optionImages */
+            }
+          /* END IF: if option is selected */
+          }
+          /* START ELSE: if option is not selected */
+          else{
+            /* START LOOP: for each optionImage in optionImages */
+            for(let optionImage of optionImages){
+              /* remove class active from image */
+              optionImage.classList.remove(classNames.menuProduct.imageVisible);
+            /* END LOOP: for each optionImage in optionImages */
+            }
+          /* END ELSE: if option is selected */
+          }
+
         /* END LOOP: for each optionId in param.options */
         }
 
