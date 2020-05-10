@@ -64,7 +64,7 @@
       thisProduct.initAccordion(); // Wywołanie akordeonu
       thisProduct.initOrderForm(); // Wywołanie metody odpowiedzialnej za event listenery formularza
       thisProduct.initAmountWidget(); // Wywołanie metody zmiany ilości składników w danym produkcie
-      thisProduct.processOrder(); // Wywołanie *
+      thisProduct.processOrder(); // Wywołanie metody przeliczającej cenę
 
       console.log('New Product: ', thisProduct);
     }
@@ -243,7 +243,7 @@
 
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
 
-      thisProduct.amountWidgetElem.addEventListener('update', function(){
+      thisProduct.amountWidgetElem.addEventListener('updated', function(){
         thisProduct.processOrder();
       });
     }
