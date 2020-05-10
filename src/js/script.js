@@ -63,9 +63,9 @@
       thisProduct.getElements(); // Wywołanie getElementsów - wyszukiwanie elementó DOM
       thisProduct.initAccordion(); // Wywołanie akordeonu
       thisProduct.initOrderForm(); // Wywołanie metody odpowiedzialnej za event listenery formularza
+      thisProduct.initAmountWidget(); // Wywołanie metody zmiany ilości składników w danym produkcie
       thisProduct.processOrder(); // Wywołanie *
 
-      console.log('"class Product" constructor:');
       console.log('New Product: ', thisProduct);
     }
 
@@ -96,6 +96,8 @@
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
 
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
 
     initAccordion(){
@@ -137,7 +139,7 @@
 
     initOrderForm(){
       const thisProduct = this;
-      console.log('"initOrderForm": ');
+      //console.log('"initOrderForm": ');
 
       thisProduct.form.addEventListener('submit', function(event){
         event.preventDefault();
@@ -159,7 +161,7 @@
 
     processOrder(){
       const thisProduct = this;
-      console.log('"processOrder": ');
+      //console.log('"processOrder": ');
 
       /* [DONE] read all data from the form (using utils.serializeFormToObject) and save it to const formData */
       const formData = utils.serializeFormToObject(thisProduct.form);
@@ -167,7 +169,7 @@
 
       /* [DONE] set variable price to equal thisProduct.data.price */
       let price = thisProduct.data.price;
-      console.log('Price of this product: ' + price);
+      //console.log('Price of this product: ' + price);
 
       /* START LOOP: for each paramId in thisProduct.data.params */
       for(let paramId in thisProduct.data.params){
@@ -188,14 +190,14 @@
           if(optionSelected && !option.default){
             /* add price of option to variable price */
             price = price += option.price;
-            console.log('New price: ' + price);
+            //console.log('New price: ' + price);
           /* END IF: if option is selected and option is not default */
           }
           /* START ELSE IF: if option is not selected and option is default */
           else if(!optionSelected && option.default){
             /* deduct price of option from price */
             price = price -= option.price;
-            console.log('New price: ' + price);
+            //console.log('New price: ' + price);
           /* END ELSE IF: if option is not selected and option is default */
           }
 
@@ -234,13 +236,50 @@
       thisProduct.priceElem.innerHTML = price;
     }
 
+    initAmountWidget(){
+      const thisProduct = this;
+
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+    }
+  }
+
+  class AmountWidget{
+    constructor(element){
+      const thisWidget = this;
+
+      thisWidget.getElements(element);
+      thisWidget.setValue(thisWidget.input.value);
+
+      console.log('AmountWidget: ', thisWidget);
+      console.log('Constructor arguments: ', element);
+    }
+
+    getElements(element){
+      const thisWidget = this;
+    
+      thisWidget.element = element;
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    }
+
+    setValue(value){
+      const thisWidget = this;
+
+      const newValue = parseInt(value);
+
+      /* TODO Add Validation */
+
+      thisWidget.value = newValue;
+      thisWidget.input.value = thisWidget.value;
+    }
   }
 
   const app = {
     initMenu: function(){
       const thisApp = this;
       
-      console.log('"thisApp.data" :', thisApp.data);
+      //console.log('"thisApp.data" :', thisApp.data);
 
       for (let productData in thisApp.data.products){
         new Product(productData, thisApp.data.products[productData]);
