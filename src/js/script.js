@@ -155,8 +155,7 @@
       thisProduct.cartButton.addEventListener('click', function(event){
         event.preventDefault();
         thisProduct.processOrder();
-      });  
-      
+      });        
     }
 
     processOrder(){
@@ -248,6 +247,7 @@
       const thisWidget = this;
 
       thisWidget.getElements(element);
+      thisWidget.initActions();
       thisWidget.setValue(thisWidget.input.value);
 
       console.log('AmountWidget: ', thisWidget);
@@ -272,6 +272,24 @@
 
       thisWidget.value = newValue;
       thisWidget.input.value = thisWidget.value;
+    }
+
+    initActions(){
+      const thisWidget = this;
+
+      thisWidget.input.addEventListener('change', function(){
+        thisWidget.setValue(thisWidget.input.value);
+      });
+      
+      thisWidget.linkDecrease.addEventListener('click', function(event){
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value -1);
+      });
+
+      thisWidget.linkIncrease.addEventListener('click', function(event){
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value +1);
+      });
     }
   }
 
