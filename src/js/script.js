@@ -72,17 +72,17 @@
     renderInMenu(){   //Renderowanie produktu - dodanie metody
       const thisProduct = this;
 
-      /* generate HTML based on template */
+      /* [DONE] generate HTML based on template */
       const generatedHTML = templates.menuProduct(thisProduct.data);
       //console.log('"GENERATED HTML" - renderInMenu: ' + generatedHTML);
       
-      /* create element using utils.createElementFromHTML */
+      /* [DONE] create element using utils.createElementFromHTML */
       thisProduct.element = utils.createDOMFromHTML(generatedHTML);
 
-      /* find menu container */
+      /* [DONE] find menu container */
       const menuContainer = document.querySelector(select.containerOf.menu);
 
-      /* add element to menu */
+      /* [DONE] add element to menu */
       menuContainer.appendChild(thisProduct.element);
     }
 
@@ -170,71 +170,71 @@
       let price = thisProduct.data.price;
       //console.log('Price of this product: ' + price);
 
-      /* START LOOP: for each paramId in thisProduct.data.params */
+      /* [DONE] START LOOP: for each paramId in thisProduct.data.params */
       for(let paramId in thisProduct.data.params){
       
-        /* save the element in thisProduct.data.params with key paramId as const param */
+        /* [DONE] save the element in thisProduct.data.params with key paramId as const param */
         const param = thisProduct.data.params[paramId];
         //console.log('"param": ' + param);
 
-        /* START LOOP: for each optionId in param.options */
+        /* [DONE] START LOOP: for each optionId in param.options */
         for(let optionId in param.options){
           
-          /* save the element in param.options with key optionId as const option */
+          /* [DONE] save the element in param.options with key optionId as const option */
           const option = param.options[optionId];
           const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
           //console.log('"option": ' + option);
 
-          /* START IF: if option is selected and option is not default */
+          /* [DONE] START IF: if option is selected and option is not default */
           if(optionSelected && !option.default){
             /* add price of option to variable price */
             price = price += option.price;
             //console.log('New price: ' + price);
-          /* END IF: if option is selected and option is not default */
+          /* [DONE] END IF: if option is selected and option is not default */
           }
-          /* START ELSE IF: if option is not selected and option is default */
+          /* [DONE] START ELSE IF: if option is not selected and option is default */
           else if(!optionSelected && option.default){
             /* deduct price of option from price */
             price = price -= option.price;
             //console.log('New price: ' + price);
-          /* END ELSE IF: if option is not selected and option is default */
+          /* [DONE] END ELSE IF: if option is not selected and option is default */
           }
 
-          /* save images of each option as const optionImage */
+          /* [DONE] save images of each option as const optionImage */
           const optionImages = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
           //console.log('"optionImages": ', optionImages);
 
-          /* START IF: if option is selected */
+          /* [DONE] START IF: if option is selected */
           if(optionSelected){
-            /* START LOOP: for each optionImage in optionImages */
+            /* [DONE] START LOOP: for each optionImage in optionImages */
             for(let optionImage of optionImages){
-              /* add class active to image */
+              /* [DONE] add class active to image */
               optionImage.classList.add(classNames.menuProduct.imageVisible);
-            /* END LOOP: for each optionImage in optionImages */
+            /* [DONE] END LOOP: for each optionImage in optionImages */
             }
-          /* END IF: if option is selected */
+          /* [DONE] END IF: if option is selected */
           }
-          /* START ELSE: if option is not selected */
+          /* [DONE] START ELSE: if option is not selected */
           else{
-            /* START LOOP: for each optionImage in optionImages */
+            /* [DONE] START LOOP: for each optionImage in optionImages */
             for(let optionImage of optionImages){
               /* remove class active from image */
               optionImage.classList.remove(classNames.menuProduct.imageVisible);
-            /* END LOOP: for each optionImage in optionImages */
+            /* [DONE] END LOOP: for each optionImage in optionImages */
             }
-          /* END ELSE: if option is selected */
+          /* [DONE] END ELSE: if option is selected */
           }
 
-        /* END LOOP: for each optionId in param.options */
+        /* [DONE] END LOOP: for each optionId in param.options */
         }
 
-      /* END LOOP: for each paramId in thisProduct.data.params */
+      /* [DONE] END LOOP: for each paramId in thisProduct.data.params */
       }
 
-      /* multiply price by amount */
+      /* [DONE] multiply price by amount */
       price *= thisProduct.amountWidget.value;
 
-      /* set the contents of thisProduct.priceElem to be the value of variable price */
+      /* [DONE] set the contents of thisProduct.priceElem to be the value of variable price */
       thisProduct.priceElem.innerHTML = price;
     }
 
@@ -255,6 +255,9 @@
 
       thisWidget.getElements(element);
       thisWidget.initActions();
+
+      thisWidget.value = settings.amountWidget.defaultValue;
+
       thisWidget.setValue(thisWidget.input.value);
 
       console.log('AmountWidget: ', thisWidget);
@@ -275,10 +278,12 @@
 
       const newValue = parseInt(value);
 
-      /* TODO Add Validation */
+      /* [DONE] Add Validation */
+      if(newValue != thisWidget.value && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax){
+        thisWidget.value = newValue;
+        thisWidget.announce();
+      }      
 
-      thisWidget.value = newValue;
-      thisWidget.announce();
       thisWidget.input.value = thisWidget.value;
     }
 
