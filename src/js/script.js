@@ -100,7 +100,7 @@
       thisProduct.initAmountWidget(); // Wywołanie metody zmiany ilości składników w danym produkcie
       thisProduct.processOrder(); // Wywołanie metody przeliczającej cenę
 
-      console.log('New Product: ', thisProduct);
+      //console.log('New Product: ', thisProduct);
     }
 
     renderInMenu(){   //Renderowanie produktu - dodanie metody
@@ -294,8 +294,8 @@
 
       thisWidget.setValue(thisWidget.input.value);
 
-      console.log('AmountWidget: ', thisWidget);
-      console.log('Constructor arguments: ', element);
+      //console.log('AmountWidget: ', thisWidget);
+      //console.log('Constructor arguments: ', element);
     }
 
     getElements(element){
@@ -347,6 +347,38 @@
     }
   }
 
+  class Cart{
+    constructor(element){
+      const thisCart = this;
+
+      thisCart.products = [];
+
+      thisCart.getElements(element);
+
+      thisCart.initActions();
+
+      console.log('New Cart', thisCart);
+    }
+
+    initActions(){
+      const thisCart = this;
+
+      thisCart.dom.toggleTrigger.addEventListener('click', function(event){
+        thisCart.dom.wrapper.classList.toggle('active');
+      });
+    }
+
+    getElements(element){
+      const thisCart = this;
+
+      thisCart.dom = {};
+
+      thisCart.dom.wrapper = element;
+
+      thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+    }
+  }
+
   const app = {
     initMenu: function(){
       const thisApp = this;
@@ -363,6 +395,14 @@
 
       thisApp.data = dataSource;
     },
+
+    initCart: function(){
+      const thisApp = this;
+
+      const cartElem = document.querySelector(select.containerOf.cart);
+      thisApp.cart = new Cart(cartElem);
+    },
+
     
     init: function(){
       const thisApp = this;
@@ -374,7 +414,8 @@
 
       thisApp.initData();
       thisApp.initMenu();
-    },
+      thisApp.initCart();
+    },    
   };
 
   app.init();
