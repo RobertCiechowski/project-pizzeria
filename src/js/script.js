@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
 
 {
@@ -86,6 +87,8 @@
     // CODE ADDED END
   };
 
+  // CLASS PRODUCT
+
   class Product{
     constructor(id, data){
       const thisProduct = this;
@@ -94,7 +97,7 @@
       thisProduct.data = data; // Zapisywanie argumentów konstruktora
 
       thisProduct.renderInMenu(); // Renderowanie produktu
-      thisProduct.getElements(); // Wywołanie getElementsów - wyszukiwanie elementó DOM
+      thisProduct.getElements(); // Wywołanie getElementsów - wyszukiwanie elementów DOM
       thisProduct.initAccordion(); // Wywołanie akordeonu
       thisProduct.initOrderForm(); // Wywołanie metody odpowiedzialnej za event listenery formularza
       thisProduct.initAmountWidget(); // Wywołanie metody zmiany ilości składników w danym produkcie
@@ -305,6 +308,8 @@
     }
   }
 
+  // CLASS AMOUNT WIDGET
+
   class AmountWidget{
     constructor(element){
       const thisWidget = this;
@@ -369,6 +374,8 @@
     }
   }
 
+  // CLASS CART
+
   class Cart{
     constructor(element){
       const thisCart = this;
@@ -408,7 +415,7 @@
 
       /* [DONE] generate HTML based on template */
       const generatedHTML = templates.cartProduct(menuProduct);
-      console.log('cart.add generatedHTML: ' + generatedHTML);
+      //console.log('cart.add generatedHTML: ' + generatedHTML);
 
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
       console.log('cart.add generatedDOM: ' + generatedDOM);
@@ -416,6 +423,42 @@
       thisCart.dom.productList.appendChild(generatedDOM);
 
       console.log('adding product', menuProduct);
+
+      thisCart.products.push(menuProduct);
+      console.log('thisCart.products', thisCart.products);
+    }
+  }
+
+  // CLASS CART PRODUCT
+
+  class CartProduct{
+    constructor(menuProduct, element){
+      const thisCartProduct = this;
+
+      thisCartProduct.id = menuProduct.id;
+      thisCartProduct.name = menuProduct.name;
+      thisCartProduct.price = menuProduct.price;
+      thisCartProduct.priceSingle = menuProduct.priceSingle;
+      thisCartProduct.amount = menuProduct.amount;
+
+      thisCartProduct.params = JSON.parse(JSON.stringify(menuProduct.params));
+
+      thisCartProduct.getElements(element);
+
+      console.log('"thisCartProduct": ', thisCartProduct);
+      console.log('"productData: ', menuProduct);
+
+    }
+
+    getElements(element){
+      const thisCartProduct = this;
+
+      thisCartProduct.dom = {};
+      thisCartProduct.dom.wrapper = element;
+      thisCartProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);
+      thisCartProduct.dom.price = thisCartProduct.dom.wrappper.querySelector(select.CartProduct.price);
+      thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.CartProduct.edit);
+      thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.CartProduct.remove);
     }
   }
 
