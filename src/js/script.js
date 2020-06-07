@@ -386,7 +386,6 @@
       thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
 
       thisCart.getElements(element);
-
       thisCart.initActions();
 
       //console.log('New Cart', thisCart);
@@ -400,6 +399,10 @@
       });
       thisCart.dom.productList.addEventListener('updated', function(){
         thisCart.update();
+      });
+
+      thisCart.dom.productList.addEventListener('remove', function(){
+        thisCart.remove(event.detail.cartProduct);
       });
     }
 
@@ -461,6 +464,16 @@
           elem.innerHTML = thisCart[key];
         }
       }
+    }
+    
+    remove(cartProduct){
+      const thisCart = this;
+
+      const index = thisCart.products.indexOf(cartProduct);
+      thisCart.products.splice(index, 1);
+      cartProduct.dom.wrapper.remove;
+
+      thisCart.update();
     }
   }
 
