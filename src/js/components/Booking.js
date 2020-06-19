@@ -1,6 +1,7 @@
 import {templates, select} from '../settings.js';
 import {AmountWidget} from './AmountWidget.js';
 import {DatePicker} from './DatePicker.js';
+import {HourPicker} from './HourPicker.js';
 
 export class Booking {
   constructor(element) {
@@ -24,6 +25,7 @@ export class Booking {
     thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount); // znalezienie i zapisanie 
     // elementu dla hourAmount analogicznie do peopleAmount
     thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
+    thisBooking.dom.HourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
   }
 
   initWidgets() {
@@ -32,5 +34,6 @@ export class Booking {
     thisBooking.peopleAmount = new AmountWidget(thisBooking.dom.peopleAmount); // nowa instancja klasy AmountWidget
     thisBooking.hoursAmount = new AmountWidget(thisBooking.dom.hoursAmount); // nowa instancja klasy AmountWidget
     thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker); // nowa instancja klasy DatePicker
+    thisBooking.HourPicker = new HourPicker(thisBooking.dom.HourPicker); // nowa instancja klasy HourPicker
   }
 }
