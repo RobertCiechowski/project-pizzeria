@@ -22,7 +22,7 @@ export class Booking {
     thisBooking.dom.wrapper.innerHTML = generatedHTML; // zmiana zawartości wrappera na kod HTML wygenerowany z szablonu
     thisBooking.dom.peopleAmount = thisBooking.dom.wrapper.querySelector(select.booking.peopleAmount); // zapisanie we
     // właściwości thisBooking.dom.peopleAmount pojedynczego elementu znalezionego we wrapperze i pasującego do selektora 
-    // select.booking.peopleAmount
+    // select.booking.peopleAmount  
     thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount); // znalezienie i zapisanie 
     // elementu dla hourAmount analogicznie do peopleAmount
     thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
@@ -41,9 +41,9 @@ export class Booking {
   getData(){
     const thisBooking = this;
 
-    const startEndDates = {};
-    startEndDates[settings.db.dateStartParamKey] = utils.dateToStr(thisBooking.datePicker.minDate);
-    startEndDates[settings.db.dateEndParamKey] = utils.dateToStr(thisBooking.datePicker.maxDate);
+    const startEndDates = {}; // nowy objekt - startEndDates (pusty)
+    startEndDates[settings.db.dateStartParamKey] = utils.dateToStr(thisBooking.datePicker.minDate); // przyposanie wartości (z użyciem funkcji zmiany daty na ciąg znaków) do klucza 'settings.db.dateStartParamKey' w obiekcie startEndDates
+    startEndDates[settings.db.dateEndParamKey] = utils.dateToStr(thisBooking.datePicker.maxDate); // przyposanie wartości (z użyciem funkcji zmiany daty na ciąg znaków) do klucza 'settings.db.dateEndParamKey' w obiekcie startEndDates
 
     const endDate = {};
     endDate[settings.db.dateEndParamKey] = startEndDates[settings.db.dateEndParamKey];
@@ -85,24 +85,59 @@ export class Booking {
     const thisBooking = this;
 
     thisBooking.booked = {};
+    //console.log('First thisBooking.booked: ', thisBooking.booked);
 
+    // pętla iterująca po wszystkich elementach obiektu eventsCurrent (app.json) - przepuszcza je przez metodę makeBooked
     for(let eventCurrent of eventsCurrent){
-      console.log('Elements of eventsCurrent: ', eventCurrent);
+      //console.log('Elements of eventsCurrent: ', eventCurrent);
       thisBooking.makeBooked(eventCurrent.date, eventCurrent.hour, eventCurrent.duration, eventCurrent.table);
     }
 
+    // pętla iterująca po wszystkich elementach obiektu bookings (app.json) - przepuszcza je przez metodę makeBooked
+    for(let bookedElement of bookings){
+      thisBooking.makeBooked(bookedElement.date, bookedElement.hour, bookedElement.duration, bookedElement.table);
+    }
+
+    const minDate = thisBooking.datePicker.minDate;
+    const maxDate = thisBooking.datePicker.maxDate;
+    console.log('DATY: ', minDate, maxDate);
+    
+    // pętla iterująca po wszystkich elementach obiektu eventsRepeat (app.json) - przepuszcza je przez metodę makeBooked
+    for(let eventRepeat of eventsRepeat){
+      //console.log('@@@@@ eventRepeat: ', eventRepeat);
+      if(eventRepeat.repeat == 'daily'){
+        for(let repeatDay = minDate; repeatDay <= maxDate; repeatDay = utils.addDays(repeatDay, 1)){
+          thisBooking.makeBooked(utils.dateToStr(repeatDay), eventRepeat.hour, eventRepeat.duration, eventRepeat.table);
+          // console.log('repeatDay: ', repeatDay);
+        }
+      }         
+    }
+    
     //console.log('eventsCurrent: ', eventsCurrent);
   }
 
   makeBooked(date, hour, duration, table){
     const thisBooking = this;
 
-    thisBooking.booked = {
-      date: {
-        hour: [table],
-        
-      }
-    };
-    console.log('!thisBooking.booked: ', thisBooking.booked);
+    const bookedHour = utils.hourToNumber(hour);
+    //console.log('bookedHour: ', bookedHour);
+
+    // jeżeli nie istnieje klucz z taką datą jaka jest podana w app.json, to jest on tworzony (w obiekcie thisBooking.booked)
+    if(!thisBooking.booked[date]){
+      thisBooking.booked[date] = {};
+    }
+
+    // pętla iterująca po każdym półgodzinnym bloku z zabookowanego przedziału czasowego, z każdym kolejnym przebiegiem zwiększa blok o pół godziny
+    for(let blockHour = bookedHour; blockHour < bookedHour + duration; blockHour += 0.5){
+      //console.log('blockHour: ', blockHour);
+      // jeżeli nie istnieje taki półgodzinny blok, to jest on tworzony
+      if(!thisBooking.booked[date][blockHour]){
+        thisBooking.booked[date][blockHour] = [];
+      } 
+      // dodajemy do klucza blockHour w kluczu date w obiekcie booked numer zabookowanego stolika 
+      thisBooking.booked[date][blockHour].push(table);
+    }
+
+    console.log('!!!!thisBooking.booked: ', thisBooking.booked);
   }
 }

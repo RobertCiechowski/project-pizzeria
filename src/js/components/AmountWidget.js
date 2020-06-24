@@ -35,12 +35,12 @@ export class AmountWidget extends BaseWidget{
       
     thisWidget.dom.linkDecrease.addEventListener('click', function(event){
       event.preventDefault();
-      thisWidget.value = thisWidget.dom.value - 1;
+      thisWidget.value = thisWidget.value - 1;
     });
 
     thisWidget.dom.linkIncrease.addEventListener('click', function(event){
       event.preventDefault();
-      thisWidget.value = thisWidget.dom.value + 1;
+      thisWidget.value = thisWidget.value + 1;
     });
   }
 
