@@ -52,6 +52,7 @@ export class Booking {
       table.addEventListener('click', function(event){ // event listener na kliknięcie któregokolwiek ze stołów
         event.preventDefault();
         let tableNumber = table.getAttribute(settings.booking.tableIdAttribute); // we właściwości 'tableNumber' zapisujemy jego id
+        tableNumber = parseInt(tableNumber); // przerobienie 'tableNumber' na liczbę
         
         if(table.classList.contains(classNames.booking.tableBooked)){ // jeśli stół posiada klasę 'booked'
           alert('This table is already reserved!'); // wyświetl alert, że stół już jest zajęty
@@ -66,6 +67,7 @@ export class Booking {
             console.log('A table was selected. Removing class Selected from all tables.');
           } // koniec pętli
           table.classList.add(classNames.booking.tableSelected); // dodajemy klasę 'selected' do stołu, który został kliknięty
+          thisBooking.chosenTable = tableNumber;
           console.log('Table (id:', tableNumber, ') selected. Added class selected.');
         }
       });
@@ -75,6 +77,7 @@ export class Booking {
     thisBooking.dom.formSubmit.addEventListener('click', function(event){
       event.preventDefault();
       console.log('Clicked button "BOOK TABLE"');
+      thisBooking.sendBooking(); // wywołanie metody 'sendBooking' - wysłanie bookingu do API
     });
     // *** Koniec kodu odpowiadającego za wysłanie formularza z podstrony Booking
   }
@@ -207,5 +210,43 @@ export class Booking {
         table.classList.remove(classNames.booking.tableBooked);
       }
     }
+  }
+
+  // wysłanie bookingu do API
+  sendBooking(){
+    const thisBooking = this;
+
+    const url = settings.db.url + '/' + settings.db.booking;
+
+    const bookingPayload = {
+      date: thisBooking.date,
+      hour: utils.numberToHour(thisBooking.hour),
+      table: thisBooking.chosenTable,
+      people: thisBooking.peopleAmount.value,
+      duration: thisBooking.hoursAmount.value,
+      starters: [],
+      phone: '000 TEST',
+      address: 'TEST address',
+    };
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bookingPayload),
+    };
+
+    fetch(url, options)
+      .then(function(response){
+        return response.json();
+      }).then(function(parsedResponse){
+        console.log('parsedReponse: ', parsedResponse); // wyśiwtlanie wysłanego zamówienia w konsoli
+        // wywoałanie metody makeBooked, żeby wysłany 'booking' sprawił, że stolik stanie się niedostępny w tym czasie
+        thisBooking.makeBooked(bookingPayload.date, bookingPayload.hour, bookingPayload.duration, bookingPayload.table);
+        thisBooking.updateDOM(); // wywołanie metody 'updateDom'
+      });
+
+    // ZŁOŻONE ZAMÓWIENIA MOŻNA SPRAWDZIĆ POD ADRESEM: http://localhost:3131/booking
   }
 }
