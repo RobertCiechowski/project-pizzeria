@@ -37,7 +37,7 @@ export class Booking {
     thisBooking.peopleAmount = new AmountWidget(thisBooking.dom.peopleAmount); // nowa instancja klasy AmountWidget
     thisBooking.hoursAmount = new AmountWidget(thisBooking.dom.hoursAmount); // nowa instancja klasy AmountWidget
     thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker); // nowa instancja klasy DatePicker
-    thisBooking.HourPicker = new HourPicker(thisBooking.dom.HourPicker); // nowa instancja klasy HourPicker
+    thisBooking.hourPicker = new HourPicker(thisBooking.dom.HourPicker); // nowa instancja klasy HourPicker
 
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
@@ -60,7 +60,7 @@ export class Booking {
       eventsRepeat: settings.db.repeatParam + '&' + utils.queryParams(endDate),
     };
 
-    console.log('getData params: ', params);
+    //console.log('getData params: ', params);
 
     const urls = {
       booking: settings.db.url + '/' + settings.db.booking + '?' + params.booking,
@@ -68,7 +68,7 @@ export class Booking {
       eventsRepeat: settings.db.url + '/' + settings.db.event + '?' + params.eventsRepeat,
     };
 
-    console.log('getData urls: ', urls);
+    //console.log('getData urls: ', urls);
 
     Promise.all([
       fetch(urls.booking),
@@ -106,7 +106,7 @@ export class Booking {
 
     const minDate = thisBooking.datePicker.minDate;
     const maxDate = thisBooking.datePicker.maxDate;
-    console.log('DATY: ', minDate, maxDate);
+    //console.log('DATY: ', minDate, maxDate);
     
     // pętla iterująca po wszystkich elementach obiektu eventsRepeat (app.json) - przepuszcza je przez metodę makeBooked
     for(let eventRepeat of eventsRepeat){
@@ -145,7 +145,7 @@ export class Booking {
       thisBooking.booked[date][blockHour].push(table);
     }
 
-    console.log('thisBooking.booked: ', thisBooking.booked);
+    //console.log('thisBooking.booked: ', thisBooking.booked);
   }
 
   updateDOM(){
@@ -158,7 +158,7 @@ export class Booking {
     for(let table of thisBooking.dom.tables){
       let tableNumber = table.getAttribute(settings.booking.tableIdAttribute);
       tableNumber = parseInt(tableNumber);
-      console.log('Table: ', table);
+      //console.log('Table: ', table);
 
       if(thisBooking.booked[thisBooking.date] && 
         thisBooking.booked[thisBooking.date][thisBooking.hour] &&
