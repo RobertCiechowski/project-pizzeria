@@ -207,7 +207,7 @@
         {
             "id": 1,
             "date": "2020-06-25",
-            "hour": "09:30",
+            "hour": "14:30",
             "table": 1,
             "repeat": false,
             "duration": 4,
@@ -217,7 +217,7 @@
         {
             "id": 2,
             "date": "2020-06-25",
-            "hour": "10:00",
+            "hour": "14:00",
             "table": 2,
             "repeat": "daily",
             "duration": 2,
@@ -267,7 +267,7 @@
         {
             "id": 2,
             "date": "2020-06-25",
-            "hour": "10:00",
+            "hour": "14:00",
             "table": 3,
             "repeat": false,
             "duration": 5,

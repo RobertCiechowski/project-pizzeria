@@ -29,6 +29,7 @@ export class Booking {
     thisBooking.dom.HourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables); // właściwość thisBooking.dom.tables z
     // zapisanymi w niej wszystkimi znalezionymi we wrapperze elementy pasujące do selektora zapisanego w select.booking.tables
+    thisBooking.dom.formSubmit = thisBooking.dom.wrapper.querySelector(select.booking.formSubmit); // przycisk do wysłania formularza z podstrony booking
   }
 
   initWidgets() {
@@ -42,6 +43,40 @@ export class Booking {
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
     });
+
+    //console.log('thisBooking.dom: ',thisBooking.dom);
+
+    // *** Start kodu odpowiadającego za zaznaczanie stolika
+    // pętla iterująca po wszystkich elementach obiektu tables, czyli po wszystkich stołach w knajpie
+    for(let table of thisBooking.dom.tables){
+      table.addEventListener('click', function(event){ // event listener na kliknięcie któregokolwiek ze stołów
+        event.preventDefault();
+        let tableNumber = table.getAttribute(settings.booking.tableIdAttribute); // we właściwości 'tableNumber' zapisujemy jego id
+        
+        if(table.classList.contains(classNames.booking.tableBooked)){ // jeśli stół posiada klasę 'booked'
+          alert('This table is already reserved!'); // wyświetl alert, że stół już jest zajęty
+          console.log('Reserved table clicked. Alert showed.');
+          //return;
+        } else if(table.classList.contains(classNames.booking.tableSelected)){ // jeśli stół posiada klasę 'selected' (został już kliknięty przy wyborze stołu)
+          table.classList.remove(classNames.booking.tableSelected); // to usuń klasę selected (odznaczamy wcześniej wybrany stół)
+          console.log('Table (id:', tableNumber, ') deselected. Removed class selected.');
+        } else { // jeśli żadne z powyższych, to
+          for(let table of thisBooking.dom.tables){ // pętla która leci przez wszystkie stoły
+            table.classList.remove(classNames.booking.tableSelected); // ze wszystkich stołów jest usuwana klasa 'selected'
+            console.log('A table was selected. Removing class Selected from all tables.');
+          } // koniec pętli
+          table.classList.add(classNames.booking.tableSelected); // dodajemy klasę 'selected' do stołu, który został kliknięty
+          console.log('Table (id:', tableNumber, ') selected. Added class selected.');
+        }
+      });
+    } // *** Koniec kodu odpowiadającego za zaznaczanie stolika
+
+    // *** Start kodu odpowiadającego za wysłanie formularza z podstrony Booking
+    thisBooking.dom.formSubmit.addEventListener('click', function(event){
+      event.preventDefault();
+      console.log('Clicked button "BOOK TABLE"');
+    });
+    // *** Koniec kodu odpowiadającego za wysłanie formularza z podstrony Booking
   }
 
   getData(){
@@ -60,7 +95,7 @@ export class Booking {
       eventsRepeat: settings.db.repeatParam + '&' + utils.queryParams(endDate),
     };
 
-    //console.log('getData params: ', params);
+    console.log('getData params: ', params);
 
     const urls = {
       booking: settings.db.url + '/' + settings.db.booking + '?' + params.booking,
@@ -152,6 +187,8 @@ export class Booking {
     const thisBooking = this;
     console.log('Method udateDOM');
 
+    
+
     thisBooking.date = thisBooking.datePicker.value;
     thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
 
@@ -159,6 +196,8 @@ export class Booking {
       let tableNumber = table.getAttribute(settings.booking.tableIdAttribute);
       tableNumber = parseInt(tableNumber);
       //console.log('Table: ', table);
+
+      table.classList.remove(classNames.booking.tableSelected);
 
       if(thisBooking.booked[thisBooking.date] && 
         thisBooking.booked[thisBooking.date][thisBooking.hour] &&
