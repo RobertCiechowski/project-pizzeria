@@ -21,6 +21,7 @@
           <h2 class="logo__subtitle">the best homemade Italian food</h2>
         </div>
         <div class="main-nav">
+          <a href="#home">Home</a>
           <a href="#order">Order</a>
           <a href="#booking">Booking</a>
         </div>
@@ -61,14 +62,63 @@
     </div>
   </header>
 
+<!--
+  PAGES
+-->
+
   <div id="pages">
+
+    <!-- Section Home -->
+    <section id="home">
+      <div class="home-wrapper container">
+        <div class="home-page"> <!-- wrapper strony Home -->
+          
+          <div class="section-welcome"> <!-- Sekcja 1 - dwa obrazki i info o godzinach otwarcia -->
+            <div class="shortcut-images">
+              <img src="https://i.postimg.cc/qMwLbHSm/pizza-1.jpg" alt="order">
+              <div class="shortcut-images-details">
+                <a href="">Order online</a>
+                <p>Delicious food delivered to your door</p>
+              </div>
+            </div> <!-- Dwa obrazki -->
+            <div class="shortcut-images">
+              <img src="https://i.postimg.cc/9QfBsNjc/pizza-2.jpg" alt="book">
+              <div class="shortcut-images-details">
+                <a href="">Book a table</a>
+                <p>Don't wait in the queue</p>
+              </div>
+            </div>
+            <div class="opening-hours">
+              <p>OPENING HOURS:</p>
+              <p>TUE-SUN, 12PM - 12AM</p>
+            </div> <!-- Info o godzinach otwarcia -->
+          </div>
+
+          <div class="section-carousel"> <!-- Sekcja 2 - karuzela -->
+            <div class="reviews"></div> <!-- Opinie  -->
+          </div>      
+
+          <div class="section-gallery">
+
+          </div> <!-- Sekcja 3 - galeria zdjęć -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Order -->
     <section id="order">
       <div id="product-list" class="product-list container"></div>
     </section>
+
+    <!-- Section Booking -->
     <section id="booking">
       <div class="booking-wrapper container"></div>
     </section>
   </div>
+
+<!--
+  SCRIPT
+-->
 
   <script id="template-booking-widget" type="text/x-handlebars-template">
     <div class="booking-widget">
