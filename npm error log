@@ -1,0 +1,94 @@
+$ npm run watch
+
+> fer-07-project@1.0.0 watch C:\Users\robci\Desktop\Kodilla\project-pizzeria
+> npm-run-all build build-dev -p watch:* server
+
+
+> fer-07-project@1.0.0 build C:\Users\robci\Desktop\Kodilla\project-pizzeria
+> npm-run-all build:* test
+
+
+> fer-07-project@1.0.0 build:clean C:\Users\robci\Desktop\Kodilla\project-pizzeria
+> mkdirp dist && rm -r dist && mkdirp dist
+
+
+> fer-07-project@1.0.0 build:copy C:\Users\robci\Desktop\Kodilla\project-pizzeria
+> copyfiles -a -u 1 -e "**/sass/**/*" -e "**/.gitkeep" "src/**/*" dist
+
+
+> fer-07-project@1.0.0 build:sass C:\Users\robci\Desktop\Kodilla\project-pizzeria
+> node-sass --output-style compact -o dist/css src/sass
+
+Rendering Complete, saving .css file...
+Wrote CSS to C:\Users\robci\Desktop\Kodilla\project-pizzeria\dist\css\style.css
+Wrote 1 CSS files to C:\Users\robci\Desktop\Kodilla\project-pizzeria\dist\css
+
+> fer-07-project@1.0.0 build:autoprefixer C:\Users\robci\Desktop\Kodilla\project-pizzeria
+> globstar autoprefixer-cli "dist/css/*.css"
+
+
+> fer-07-project@1.0.0 test C:\Users\robci\Desktop\Kodilla\project-pizzeria
+> npm-run-all test:*
+
+
+> fer-07-project@1.0.0 test:html C:\Users\robci\Desktop\Kodilla\project-pizzeria
+> globstar nu-html-checker dist/*.html
+
+C:\Users\robci\Desktop\Kodilla\project-pizzeria\node_modules\nu-html-checker\lib\formatters\stylish.js:40
+  if (!list.length) return chalk.green('No validation errors found!');
+            ^
+
+TypeError: Cannot read property 'length' of undefined
+    at body (C:\Users\robci\Desktop\Kodilla\project-pizzeria\node_modules\nu-html-checker\lib\formatters\stylish.js:40:13)
+    at module.exports (C:\Users\robci\Desktop\Kodilla\project-pizzeria\node_modules\nu-html-checker\lib\formatters\stylish.js:17:26)
+    at Object.module.exports [as format] (C:\Users\robci\Desktop\Kodilla\project-pizzeria\node_modules\nu-html-checker\lib\formatters\index.js:5:10)
+    at Batch.<anonymous> (C:\Users\robci\Desktop\Kodilla\project-pizzeria\node_modules\nu-html-checker\bin\cli:31:26)
+    at Batch.emit (events.js:198:13)
+    at callback (C:\Users\robci\Desktop\Kodilla\project-pizzeria\node_modules\nu-html-checker\node_modules\batch\index.js:132:12)
+    at C:\Users\robci\Desktop\Kodilla\project-pizzeria\node_modules\nu-html-checker\lib\validate.js:56:5
+    at Request.callback (C:\Users\robci\Desktop\Kodilla\project-pizzeria\node_modules\superagent\lib\node\index.js:746:30)
+    at Request.<anonymous> (C:\Users\robci\Desktop\Kodilla\project-pizzeria\node_modules\superagent\lib\node\index.js:135:10)
+    at Request.emit (events.js:198:13)
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! fer-07-project@1.0.0 test:html: `globstar nu-html-checker dist/*.html`
+npm ERR! Exit status 1
+npm ERR!
+npm ERR! Failed at the fer-07-project@1.0.0 test:html script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     C:\Users\robci\AppData\Roaming\npm-cache\_logs\2020-06-29T09_53_07_729Z-debug.log
+ERROR: "test:html" exited with 1.
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! fer-07-project@1.0.0 test: `npm-run-all test:*`
+npm ERR! Exit status 1
+npm ERR!
+npm ERR! Failed at the fer-07-project@1.0.0 test script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     C:\Users\robci\AppData\Roaming\npm-cache\_logs\2020-06-29T09_53_07_765Z-debug.log
+ERROR: "test" exited with 1.
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! fer-07-project@1.0.0 build: `npm-run-all build:* test`
+npm ERR! Exit status 1
+npm ERR!
+npm ERR! Failed at the fer-07-project@1.0.0 build script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     C:\Users\robci\AppData\Roaming\npm-cache\_logs\2020-06-29T09_53_07_802Z-debug.log
+ERROR: "build" exited with 1.
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! fer-07-project@1.0.0 watch: `npm-run-all build build-dev -p watch:* server`
+npm ERR! Exit status 1
+npm ERR!
+npm ERR! Failed at the fer-07-project@1.0.0 watch script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     C:\Users\robci\AppData\Roaming\npm-cache\_logs\2020-06-29T09_53_07_839Z-debug.log
