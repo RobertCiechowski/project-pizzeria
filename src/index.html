@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Pizzeria</title>
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,300i,700%7COswald:300,500,700&amp;subset=latin-ext" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,300i,700%7COswald:300,500,700&amp;subset=latin-ext"
+    rel="stylesheet">
   <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_orange.css">
   <link rel="stylesheet" href="vendor/range-slider.min.css">
+
   <link rel="stylesheet" href="css/style.css">
+  <title>Pizzeria</title>
 </head>
+
 <body>
 
   <header class="header">
@@ -62,7 +70,7 @@
     </div>
   </header>
 
-<!--
+  <!--
   PAGES
 -->
 
@@ -70,38 +78,89 @@
 
     <!-- Section Home -->
     <section id="home">
-      <div class="home-wrapper container">
-        <div class="home-page"> <!-- wrapper strony Home -->
-          
-          <div class="section-welcome"> <!-- Sekcja 1 - dwa obrazki i info o godzinach otwarcia -->
-            <div class="shortcut-images">
-              <img src="https://i.postimg.cc/qMwLbHSm/pizza-1.jpg" alt="order">
-              <div class="shortcut-images-details">
-                <a href="">Order online</a>
-                <p>Delicious food delivered to your door</p>
+      <div class="home-wrapper container"> <!-- wrapper strony Home -->
+        
+        <div class="home-welcome"> <!-- Sekcja 1 - dwa obrazki i info o godzinach otwarcia -->
+           
+          <div class="shortcut-images"> <!-- Dwa obrazki -->
+            <img src="https://i.postimg.cc/qMwLbHSm/pizza-1.jpg" alt="order">
+            <div class="shortcut-images-details">
+              <a href="#order">Order online</a>
+              <p>Delicious food delivered to your door</p>
+            </div>
+          </div> 
+          <div class="shortcut-images"> <!-- Dwa obrazki -->
+            <img src="https://i.postimg.cc/9QfBsNjc/pizza-2.jpg" alt="book">
+            <div class="shortcut-images-details">
+              <a href="#booking">Book a table</a>
+              <p>Don't wait in the queue</p>
+            </div>
+          </div>
+          <div class="opening-hours"> <!-- Info o godzinach otwarcia -->
+            <p>OPENING HOURS:</p>
+            <p>TUE-SUN, 12PM - 12AM</p>
+          </div> 
+        </div>
+
+      <!-- Sekcja 2 - karuzela -->
+                
+        <div id="carousel-slider" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-slider" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-slider" data-slide-to="1"></li>
+            <li data-target="#carousel-slider" data-slide-to="2"></li>
+          </ol>
+
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="carousel-picture">
+                <img src="https://i.postimg.cc/mrmdJQ8G/pizza-3.jpg" alt="breakfast">
               </div>
-            </div> <!-- Dwa obrazki -->
-            <div class="shortcut-images">
-              <img src="https://i.postimg.cc/9QfBsNjc/pizza-2.jpg" alt="book">
-              <div class="shortcut-images-details">
-                <a href="">Book a table</a>
-                <p>Don't wait in the queue</p>
+              <div class="carousel-caption">
+                <h2>Amazing service!</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at ligula tellus. Curabitur cursus dolor id euismod lacinia. Duis a.</p>
+                <span>- Margaret Osborne</span>
               </div>
             </div>
-            <div class="opening-hours">
-              <p>OPENING HOURS:</p>
-              <p>TUE-SUN, 12PM - 12AM</p>
-            </div> <!-- Info o godzinach otwarcia -->
+
+            <div class="carousel-item">
+              <div class="carousel-picture">
+                <img src="https://i.postimg.cc/TPd7tkj9/pizza-4.jpg" alt="dishes">
+              </div>
+              <div class="carousel-caption">
+                <h2>Low prices!</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at ligula tellus. Curabitur cursus dolor id euismod lacinia. Duis a.</p>
+                <span>- Oberon Zemann</span>
+              </div>
+            </div>
+
+            <div class="carousel-item">
+              <div class="carousel-picture">
+                <img src="https://i.postimg.cc/wv3Wp7GR/pizza-5.jpg" alt="table">
+              </div>
+              <div class="carousel-caption">
+                <h2>Gerat location!</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at ligula tellus. Curabitur cursus dolor id euismod lacinia. Duis a.</p>
+                <span>- Libor Vajco</span>
+              </div>
+            </div>
           </div>
 
-          <div class="section-carousel"> <!-- Sekcja 2 - karuzela -->
-            <div class="reviews"></div> <!-- Opinie  -->
-          </div>      
-
-          <div class="section-gallery">
-
-          </div> <!-- Sekcja 3 - galeria zdjęć -->
+          <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
         </div>
+
+        <!-- Sekcja 3 - galeria zdjęć -->
+
+        <div class="section-gallery"> 
+
+        </div> 
       </div>
     </section>
 
@@ -116,7 +175,7 @@
     </section>
   </div>
 
-<!--
+  <!--
   SCRIPT
 -->
 
@@ -296,6 +355,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src='vendor/range-slider.min.js' type="module"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" 
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+    crossorigin="anonymous"></script>
   <script src="js/app.js" type="module"></script>
 </body>
-</html> 
+
+</html>

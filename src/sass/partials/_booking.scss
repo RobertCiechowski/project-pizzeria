@@ -173,6 +173,10 @@
       }
 
     }
+
+    &.selected {
+      color: #e6af1a;
+    }
   }
 
   [data-table="1"] {
