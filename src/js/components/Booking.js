@@ -58,17 +58,24 @@ export class Booking {
           alert('This table is already reserved!'); // wyświetl alert, że stół już jest zajęty
           console.log('Reserved table clicked. Alert showed.');
           //return;
-        } else if(table.classList.contains(classNames.booking.tableSelected)){ // jeśli stół posiada klasę 'selected' (został już kliknięty przy wyborze stołu)
+        } 
+        /* else if(table.classList.contains(classNames.booking.tableSelected)){ // jeśli stół posiada klasę 'selected' (został już kliknięty przy wyborze stołu)
           table.classList.remove(classNames.booking.tableSelected); // to usuń klasę selected (odznaczamy wcześniej wybrany stół)
           console.log('Table (id:', tableNumber, ') deselected. Removed class selected.');
-        } else { // jeśli żadne z powyższych, to
+        } */ 
+        else { // jeśli żadne z powyższych, to
+          /*
           for(let table of thisBooking.dom.tables){ // pętla która leci przez wszystkie stoły
             table.classList.remove(classNames.booking.tableSelected); // ze wszystkich stołów jest usuwana klasa 'selected'
             console.log('A table was selected. Removing class Selected from all tables.');
           } // koniec pętli
+          */
           table.classList.add(classNames.booking.tableSelected); // dodajemy klasę 'selected' do stołu, który został kliknięty
           thisBooking.chosenTable = tableNumber;
           console.log('Table (id:', tableNumber, ') selected. Added class selected.');
+
+          // Nie wiem jak stworzyć tablicę z kilkoma zaznaczonymi stołami, żeby stały się zabookowane (nie działa)
+
         }
       });
     } // *** Koniec kodu odpowiadającego za zaznaczanie stolika
